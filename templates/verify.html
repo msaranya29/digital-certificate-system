@@ -1,15 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Certificate Verification</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Certificate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: white;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            color: #333;
+        }
+        .certificate-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
+
+<div class="container">
     <h2>Verify Certificate</h2>
-    <form method="POST">
-        <label>Enter Certificate ID:</label><br>
-        <input type="text" name="certificate_id" required><br><br>
-        <input type="submit" value="Verify">
+    <form action="/verify" method="POST">
+        <input type="text" name="certificate_id" placeholder="Enter Certificate ID" required>
+        <button type="submit">Verify</button>
     </form>
-    <br><a href="/">Back to Issuance Page</a>
+
+    {% if certificate %}
+        <div class="certificate-info">
+            <h3>Certificate Found</h3>
+            <p><strong>Name:</strong> {{ certificate.name }}</p>
+            <p><strong>Course:</strong> {{ certificate.course }}</p>
+            <p><strong>Date of Issue:</strong> {{ certificate.date }}</p>
+        </div>
+    {% elif certificate is not none %}
+        <p>Certificate not found. Please check the ID again.</p>
+    {% endif %}
+</div>
+
 </body>
 </html>
